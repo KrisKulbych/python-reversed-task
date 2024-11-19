@@ -1,52 +1,18 @@
 # Reverse String Application
 
 ## Description
-This Python application contains a function reverse_string(), that reverses the letters in each word of an input string while preserving the original order of words and the positions of non-letter characters such as symbols or numbers. Additionally, the application includes custom error handling for non-string inputs.
+This Python application contains a function *reverse_string()*, that reverses the letters in each word of an input string while preserving the original order of words and the positions of non-letter characters such as symbols or numbers. Additionally, the application includes custom error handling for non-string inputs.
 
 ## Features
 - Reverses only the alphabetical characters in each word.
 - Retains the original positions of non-letter symbols and numbers within the words.
 - The order of the words in the string remains unchanged.
 - Only latin alphabet is counted in the application.
-- Raises a custom exception NonStringInputError, when the input is not a string.
+- Raises a custom exception *NonStringInputError*, when the input is not a string.
 
 ## Requirements
 Python 3.x
 
-## Solution
-<details>
-  <summary>Click For Solution</summary>
-  
-```  
-class NonStringInputError(Exception):
-    """Raised when getting non-string input"""
-
-
-def reverse_string(string: str) -> str:
-    """
-    The function reverses the letters in all words of input text.
-    The order of words preserves.
-    All non-letter symbols/numbers stays on the same places.
-    """
-    string_reversed = []
-    if not isinstance(string, str):
-        raise NonStringInputError('Error! Invalid input data: expected a string value')
-
-    for word in string.split():
-        letter_list = [letter for letter in word if letter.isalpha()]
-
-        word_reversed = []
-        for letter in word:
-            if letter.isalpha():
-                word_reversed.append(letter_list.pop())
-            else:
-                word_reversed.append(letter)
-        string_reversed.append(''.join(word_reversed))
-
-    return ' '.join(string_reversed)
-```
-</details>
- 
 ## Explanation
 1. The function takes one argument, string, which is expected to be of type str (string).
 2. The first check ensures that the input is a string. If not, it raises a custom exception *NonStringInputError*. 
@@ -77,54 +43,6 @@ dcba hgfe
 d1cba hgf!e
 
 ```
-
-## Test Cases
-<details>
-  <summary>Test Case 1: checking correct behavior for several cases with subTest</summary>
-
-```
-from unittest import TestCase, main
-
-from task_2 import reverse_string, NonStringInputError
-
-
-class TestReverseString(TestCase):
-    def test_reverse_string(self) -> None:
-        # Given
-        cases = [
-            ("abcd efgh", "dcba hgfe"),
-            ("a1bcd efg!h", "d1cba hgf!e"),
-            ("", ""),
-        ]
-        # When
-        for input_text, expected_result in cases:
-            with self.subTest(input_text=input_text):
-                # Then
-                self.assertEqual(reverse_string(input_text), expected_result)
-```
-</details>
-<details>
-  <summary>Test Case 2: checking fail behavior with custom exception</summary>
-
-```
-from unittest import TestCase, main
-
-from task_2 import reverse_string, NonStringInputError
-
-
-class TestReverseString(TestCase):
-    def test_non_string_input(self) -> None:
-        # Given
-        cases = [123, 30.6, None, [], {}, set()]
-        # When
-        for input_text in cases:
-            with self.subTest(input_text=input_text):
-                # Then
-                with self.assertRaises(NonStringInputError) as error:
-                    reverse_string(input_text)
-                self.assertEqual(str(error.exception), 'Error! Invalid input data: expected a string value')
-```
-</details>
 
 ## Helpful Links
 - [Subtests in Python](https://blog.ganssle.io/articles/2020/04/subtests-in-python.html)
